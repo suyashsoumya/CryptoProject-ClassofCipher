@@ -10,6 +10,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <fstream>
 typedef std::pair<char,int> PAIR;
 
 int* PattenConstruct(std::string p, char c){
