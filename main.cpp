@@ -94,9 +94,34 @@ int main(int argc, const char * argv[]) {
     
     //PARAMETER SETTING OVER
     
-    // NEED TO WRITE CODE TO TAKE THE INPUT here....
+	// Get input file
+	std::ifstream ciphertextFile("Test1-ciphertext.txt");
+	// Check if file can be opened
+	if (!ciphertextFile) {
+		std::cerr << "File failed to open\n";
+		exit(1);
+	}
+	// Read input and place values into cipher array
+	int cipher[500];
+	int index = 0;
+	char c;
+	std::string cipherChar;
+	while (ciphertextFile >> c) {
+		if (c == ',') {
+			cipher[index] = std::stoi(cipherChar);
+			++index;
+			cipherChar = "";
+
+		}
+		else {
+			cipherChar += c;
+		}
+	}
+	cipher[index] = std::stoi(cipherChar);
+	ciphertextFile.close();
     
-    int cipher[500];
+
+
     // decrypt process below.... TEST1
     int score[5];
     for(int i =0 ; i<5 ;i++){
