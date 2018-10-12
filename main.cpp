@@ -14,7 +14,8 @@
 typedef std::pair<char,int> PAIR;
 
 int* PattenConstruct(std::string p, char c){
-    int pattern[500];
+    int* pattern = new int[500];
+    
     for(int i =0; i<500; i++){
         if(p[i] == c) pattern[i]=1;
         else pattern[i] = 0;
@@ -42,6 +43,7 @@ int Analyze(std::string p, char c, int freq, int* cipher, int length){
             }
         }
     } // end for
+    delete[] pattern;
     if (uniqcipher.size() <= freq) return 1; // we return 1 to raise the score
     else return 0; // we return 0 because it doesn't match
     
@@ -95,34 +97,33 @@ int main(int argc, const char * argv[]) {
     
     //PARAMETER SETTING OVER
     
-	// Get input file
-	std::ifstream ciphertextFile("Test1-ciphertext.txt");
-	// Check if file can be opened
-	if (!ciphertextFile) {
-		std::cerr << "File failed to open\n";
-		exit(1);
-	}
-	// Read input and place values into cipher array
-	int cipher[500];
-	int index = 0;
-	char c;
-	std::string cipherChar;
-	while (ciphertextFile >> c) {
-		if (c == ',') {
-			cipher[index] = std::stoi(cipherChar);
-			++index;
-			cipherChar = "";
-
-		}
-		else {
-			cipherChar += c;
-		}
-	}
-	cipher[index] = std::stoi(cipherChar);
-	ciphertextFile.close();
+    // Get input file
+    std::ifstream ciphertextFile("Test1-ciphertext.txt");
+    // Check if file can be opened
+    if (!ciphertextFile) {
+        std::cerr << "File failed to open\n";
+        exit(1);
+    }
     
-
-
+    int cipher[500];
+    int index = 0;
+    char c;
+    std::string cipherChar;
+    while (ciphertextFile >> c) {
+        if (c == ',') {
+            cipher[index] = std::stoi(cipherChar);
+            ++index;
+            cipherChar = "";
+            
+        }
+        else {
+            cipherChar += c;
+        }
+    }
+    cipher[index] = std::stoi(cipherChar);
+    ciphertextFile.close();
+    
+    
     // decrypt process below.... TEST1
     int score[5];
     for(int i =0 ; i<5 ;i++){
@@ -137,6 +138,7 @@ int main(int argc, const char * argv[]) {
     int max = 0;
     for(int i = 0; i<5;i++){
         if( max <= score[i]){
+            
             max = score[i];
             correct = i;
         }
