@@ -24,15 +24,16 @@ int main() {
 	{ 'l', 3 },{ 'm', 2 },{ 'n', 6 },{ 'o', 6 },{ 'p', 2 },{ 'q', 1 },
 	{ 'r', 5 },{ 's', 5 },{ 't', 7 },{ 'u', 2 },{ 'v', 1 },{ 'w', 2 },
 	{ 'x', 1 },{ 'y', 2 },{ 'z', 1 } };
+
+	vector<string> vEnglishWords = getEnglishWords();
+	string plaintext = generatePlaintext(vEnglishWords);
 	
 	// file is for analysis of encryption scheme
 	ofstream oFile;
 	oFile.open("Test2-analysis.csv", fstream::out);
-	for (int i = 0; i < 5; ++i){
+	for (int i = 0; i < 100; ++i){
 		vector<int> vNum = shuffleNumVector();
 		map<char, vector<int>> cipherMap = createCipherMap(charFreq, vNum);
-		vector<string> vEnglishWords = getEnglishWords();
-		string plaintext = generatePlaintext(vEnglishWords);
 		oFile << "plainChar" << "," << "cipherChar" << endl;
 		plaintextCiphertextToFile(oFile, plaintext, charFreq, cipherMap);
 	}
