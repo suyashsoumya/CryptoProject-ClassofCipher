@@ -13,6 +13,8 @@
 #include <fstream>
 #include <algorithm>
 typedef std::pair<char,int> PAIR;
+std::map<char,int> freq;
+
 
 int* PattenConstruct(std::string p, char c){
     int* pattern = new int[500];
@@ -49,9 +51,76 @@ int Analyze(std::string p, char c, int freq, int* cipher, int length){
     else return 0; // we return 0 because it doesn't match
     
 }
+bool checkLimit(std::vector<std::map<char,std::vector<int>>> limittable){
+    std::map<char,int>::iterator it;
+    
+    for(it = freq.begin();it!=freq.end();it++){
+        if(limittable[it->first].size() > it->second ){
+            return false;
+        }
+    }
+    return true;
+}
 
+bool RecursiveTest2(int* cipher, int length, std::vector<std::string> plaintexts, bool denied, std::vector<std::map<char,std::vector<int>>> limittable){// denied should be 0)
 
-
+ 
+    
+    if (length <= 0 || denied  == 1) return 0;
+    for(int i =0; i<plaintexts.size();i++){
+        std::string plaintext = plaintexts[i]; // extract the string
+        for(int j=0;j<=plaintext.length();j++){
+            if (j>= length) {denied = true; break;}; // get out if we reach the end
+            std::vector<std::map<char,std::vector<int>>>::iterator it;
+            if(j==plaintext.length()){
+                for(it = limittable.begin(); it!=limittable.end();it++){
+                    
+                    if(it->begin()->first == ' '){
+                        // insert unique cipher or repeated just ignore
+                        std::vector<int>::iterator iterforvec; // iterator for vector<int>
+                        iterforvec = find(it->begin()->second.begin(),it->begin()->second.end(),cipher[j]); // compare to the current cipher
+                        if(iterforvec == it->begin()->second.end()){
+                            it->begin()->second.push_back(cipher[j]) ;//insert unique cipher
+                            // should test in here
+                        }
+                    }
+                }
+            }
+            else {
+            
+                for(it = limittable.begin(); it!=limittable.end();it++){
+                
+                    if(it->begin()->first == plaintext[j]){
+                        // insert unique cipher or repeated just ignore
+                        std::vector<int>::iterator iterforvec; // iterator for vector<int>
+                        iterforvec = find(it->begin()->second.begin(),it->begin()->second.end(),cipher[j]); // compare to the current cipher
+                        if(iterforvec == it->begin()->second.end()){
+                            it->begin()->second.push_back(cipher[j]) ;//insert unique cipher
+                        // should test in here
+                            }
+                        }
+                }
+            }
+        }
+        // now check if any character break the limit
+        if(!denied) denied = !checkLimit(limittable);
+        
+        //now recursive call the function
+        if (!denied){
+            length = length-plaintext.length()+1;
+            cipher = cipher+plaintext.length()+1;
+            if(!RecursiveTest2(cipher, length, plaintexts, denied, limittable)) std::cout<<plaintext<<' ';
+        }else{
+            if (length-plaintext.length() <=0 ){
+                std::cout<<plaintext<<' ';
+                return denied;
+            }
+        }
+        
+        
+    }
+                   return denied;
+}
 
 int main(int argc, const char * argv[]) {
     // insert code here...
@@ -67,7 +136,7 @@ int main(int argc, const char * argv[]) {
     
     p[4] = "mammate punners octette asylum nonclinically trotters slant collocation cardiology enchants ledge deregulated bottommost capsulate biotechnologies subtended cloddiest training joneses catafalque fieldmice hostels affect shrimper differentiations metacarpus amebas sweeter shiatsu oncoming tubeless menu professing apostatizing moreover eumorphic casked euphemistically programmability campaniles chickpea inactivates crossing defoggers reassures tableland doze reassembled striate precocious noncomba";
     
-    std::map<char,int> freq;
+    //std::map<char,int> freq;
     freq.insert(PAIR(' ',19));
     freq.insert(PAIR('a',7));
     freq.insert(PAIR('b',1));
@@ -105,7 +174,9 @@ int main(int argc, const char * argv[]) {
         std::cerr << "File failed to open\n";
         exit(1);
     }
-    
+    /// construct an array of string that contains all plaintext words
+    //insert code std::string plaintexts[70]
+    ///
     int cipher[500];
     int index = 0;
     char c;
@@ -144,6 +215,21 @@ int main(int argc, const char * argv[]) {
             correct = i;
         }
     }
-    std::cout<<"the correct one is "<<p[correct] << endl;
+    std::cout<<"the correct one is "<<p[correct];
+    
+    // TEST 2
+    int length = 500;
+    std::map<char, int>::iterator iter;
+    std::vector<std::map<char,std::vector<int>>> limittable;        // array of map, map is one char mapped to an an array of unique cipher
+    for(iter = freq.begin(); iter != freq.end(); iter++)
+    {
+        std::map<char,std::vector<int>> temp;
+        std::vector<int> inttemp;
+        char chartemp = iter->first;// would store unique cipher number associated with the char
+        temp.insert(std::make_pair(chartemp, inttemp));
+                    limittable.push_back(temp);
+    }
+        
+        std::cout << "Hello, World!\n";
     return 0;
 }
