@@ -11,6 +11,7 @@
 #include <map>
 #include <vector>
 #include <fstream>
+#include <algorithm>
 typedef std::pair<char,int> PAIR;
 
 int* PattenConstruct(std::string p, char c){
@@ -143,7 +144,6 @@ int main(int argc, const char * argv[]) {
             correct = i;
         }
     }
-    std::cout<<"the correct one is "<<p[correct];
-    std::cout << "Hello, World!\n";
+    std::cout<<"the correct one is "<<p[correct] << endl;
     return 0;
 }
