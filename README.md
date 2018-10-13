@@ -1,5 +1,5 @@
 # Cryptanalysis-Project
-*Applied Cryptography Project 1*
+**_Applied Cryptography Project 1_**
 
 
 *Testing Decryption (grading purposes)*:
