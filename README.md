@@ -4,11 +4,11 @@
 
 *Testing Decryption (grading purposes)*:
 
-Download Jin-Soumya-Xu-decrypt.cpp and dict.txt (place in the same directory as the ciphertext used to test our program for grading purposes)
+Download Jin-Soumya-Xu-decrypt.cpp and dict.txt (place in the same directory as the ciphertext file used to test our program for grading purposes)
 
 Compile and Run Jin-Soumya-Xu-decrypt.cpp
 
-Our program will prompt for name of ciphertext used to test our program followed by test number (1 or 2)
+Our program will prompt for name of ciphertext file used to test our program followed by test number (1 or 2)
 
 *Just For Reference:*
 
