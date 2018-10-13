@@ -2,9 +2,9 @@
 Applied Cryptography Project 1
 
 Testing Decryption (grading purposes):
-Download Jin-Soumya-Xu-decrypt.cpp and dict.txt (place in the same directory as the ciphertext used to test our program for grading purposes)
-Compile and Run Jin-Soumya-Xu-decrypt.cpp
-Prompt for name of ciphertext used to test our program and which test (1 or 2)
+Download Jin-Soumya-Xu-decrypt.cpp and dict.txt (place in the same directory as the ciphertext used to test our program for grading purposes).
+Compile and Run Jin-Soumya-Xu-decrypt.cpp.
+Prompt for name of ciphertext used to test our program and which test (1 or 2).
 
 
 Just For Reference:
