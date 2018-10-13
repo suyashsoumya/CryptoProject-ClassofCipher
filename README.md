@@ -8,7 +8,7 @@ Download Jin-Soumya-Xu-decrypt.cpp and dict.txt (place in the same directory as 
 
 Compile and Run Jin-Soumya-Xu-decrypt.cpp
 
-Prompt for name of ciphertext used to test our program and which test (1 or 2)
+Our program will prompt for name of ciphertext used to test our program followed by test number (1 or 2)
 
 *Just For Reference:*
 
