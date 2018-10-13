@@ -167,16 +167,18 @@ int main(int argc, const char * argv[]) {
     
     //PARAMETER SETTING OVER
     
+	std::string inputFile;
+	std::cout << "Please type in the input file name (ex. testfile.txt):";
+	std::cin >> inputFile;
+	
     // Get input file
-    std::ifstream ciphertextFile("Test1-ciphertext.txt");
+    std::ifstream ciphertextFile(inputFile);
     // Check if file can be opened
     if (!ciphertextFile) {
         std::cerr << "File failed to open\n";
         exit(1);
     }
-    /// construct an array of string that contains all plaintext words
-    //insert code std::string plaintexts[70]
-    ///
+	// put cipher text in cipher array
     int cipher[500];
     int index = 0;
     char c;
@@ -194,42 +196,68 @@ int main(int argc, const char * argv[]) {
     }
     cipher[index] = std::stoi(cipherChar);
     ciphertextFile.close();
-    
-    
-    // decrypt process below.... TEST1
-    int score[5];
-    for(int i =0 ; i<5 ;i++){
-        score[i] = 0;
-    std::map<char, int>::iterator iter;
-    for(iter = freq.begin(); iter != freq.end(); iter++)
-    {
-        score[i]+= Analyze(p[i], iter->first, iter->second, cipher, 500);
-    }
-    }
-    int correct = 0;
-    int max = 0;
-    for(int i = 0; i<5;i++){
-        if( max <= score[i]){
-            
-            max = score[i];
-            correct = i;
-        }
-    }
-    std::cout<<"the correct one is "<<p[correct];
-    
-    // TEST 2
-    int length = 500;
-    std::map<char, int>::iterator iter;
-    std::vector<std::map<char,std::vector<int>>> limittable;        // array of map, map is one char mapped to an an array of unique cipher
-    for(iter = freq.begin(); iter != freq.end(); iter++)
-    {
-        std::map<char,std::vector<int>> temp;
-        std::vector<int> inttemp;
-        char chartemp = iter->first;// would store unique cipher number associated with the char
-        temp.insert(std::make_pair(chartemp, inttemp));
-                    limittable.push_back(temp);
-    }
-        
-        std::cout << "Hello, World!\n";
+    	
+	std::string testNum;
+	std::cout << "Please type in 1 for Test 1 or 2 for Test 2: ";
+	std::cin >> testNum;
+	
+	if (testNum == "1"){
+		// decrypt process below.... TEST1
+		int score[5];
+		for(int i =0 ; i<5 ;i++){
+			score[i] = 0;
+		std::map<char, int>::iterator iter;
+		for(iter = freq.begin(); iter != freq.end(); iter++)
+		{
+			score[i]+= Analyze(p[i], iter->first, iter->second, cipher, 500);
+		}
+		}
+		int correct = 0;
+		int max = 0;
+		for(int i = 0; i<5;i++){
+			if( max <= score[i]){
+				
+				max = score[i];
+				correct = i;
+			}
+		}
+		std::cout<<"the correct one is: "<<p[correct];
+	}
+	else if (testNum == "2"){
+		/// construct an array of string that contains all plaintext words
+		std::ifstream dictFile("dict.txt");
+		//Check if file can be opened
+		if (!dictFile) {
+			std::cerr << "File failed to open\n";
+			exit(1);
+		}
+		// get each word from dict file and put it in vector
+		std::string plaintexts[70];
+		std::string word;
+		int i = 0;
+		while (dictFile >> word) {
+			plaintexts[i] = word;
+			++i;
+		}
+		dictFile.close();
+		
+		// TEST 2
+		int length = 500;
+		std::map<char, int>::iterator iter;
+		std::vector<std::map<char,std::vector<int>>> limittable;        // array of map, map is one char mapped to an an array of unique cipher
+		for(iter = freq.begin(); iter != freq.end(); iter++)
+		{
+			std::map<char,std::vector<int>> temp;
+			std::vector<int> inttemp;
+			char chartemp = iter->first;// would store unique cipher number associated with the char
+			temp.insert(std::make_pair(chartemp, inttemp));
+						limittable.push_back(temp);
+		}
+		std::cout << "End of Test2" << std::endl; // for testing 
+	}
+    else{
+		std::cout << "You did not type 1 or 2" << std::endl;
+	}
+	
     return 0;
 }
