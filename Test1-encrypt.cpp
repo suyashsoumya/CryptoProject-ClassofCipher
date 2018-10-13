@@ -30,7 +30,9 @@ int main() {
 	map<char, vector<int>> cipherMap = createCipherMap(charFreq, vNum);
 	vector<string> vPlaintexts = getPlaintexts();
 	// get random plaintext 
-	string plaintext = vPlaintexts[rand() % 5];
+	int rNum = rand() % 5;
+	cout << "This is encrypting plaintext " << rNum + 1 << endl; // for testing
+	string plaintext = vPlaintexts[rNum];
 	string ciphertext = encryptPlaintext(plaintext, charFreq, cipherMap);
 	writeCiphertextToFile(ciphertext);
 

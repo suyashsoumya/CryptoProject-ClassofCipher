@@ -30,6 +30,7 @@ int main() {
 	map<char, vector<int>> cipherMap = createCipherMap(charFreq, vNum);
 	vector<string> vEnglishWords = getEnglishWords();
 	string plaintext = generatePlaintext(vEnglishWords);
+	cout << "This is encrypting: " <<  plaintext << endl; // for testing
 	string ciphertext = encryptPlaintext(plaintext, charFreq, cipherMap);
 	writeCiphertextToFile(ciphertext);
 
